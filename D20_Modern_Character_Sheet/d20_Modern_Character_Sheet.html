@@ -1,0 +1,405 @@
+<html>
+	<head>
+		<!-- include the css and jscript file for organization and auto skill calculation -->
+		<link rel="stylesheet" type="text/css" href="./css/d20_Modern_Character_Sheet.css" />
+		<script type="text/javascript" src="./jscript/d20_Modern_Character_Sheet.js"></script>
+	</head>
+	<body>
+		<!-- begin form submission -->
+		<form action="#">
+			<table>
+				<!-- character description -->
+				<tr><td colspan="2"><table>
+					<tr><td rowspan="3" valign="top"><img src="./img/d20_modern_logo.png" align="left" width="150px"></td><td colspan="4" valign="bottom"><input size="25" type="text" name="char_name" id="char_name"/><div class="small_font">CHARACTER NAME</div></td><td colspan="3" valign="bottom"><input size="25" type="text" name="player" id="player"/><div class="small_font">PLAYER</div></td><td rowspan="3" valign="bottom"><img src="./img/char_rec_sheet.png" width="200px"></td></tr>
+					<tr><td colspan="2" valign="bottom"><input type="text" name="class" id="class"/><div class="small_font">CLASS</div></td><td colspan="2" valign="bottom"><input type="text" name="level" id="level"/><div class="small_font">LEVEL</div></td><td colspan="3" valign="bottom"><input type="text"><div class="small_font" name="occupation" id="occupation"/>OCCUPATION</div></td></tr>
+					<tr><td><input size="3" type="text" name="age" id="age"/><div class="small_font">AGE</div></td><td><input size="3" type="text" name="gender" id="gender"/><div class="small_font">GENDER</div></td><td><input size="3" type="text" name="height" id="height"/><div class="small_font">HEIGHT</div></td><td><input size="3" type="text" name="weight" id="weight"/><div class="small_font">WEIGHT</div></td><td><input size="10" type="text" name="eyes" id="eyes"/><div class="small_font">EYES</div></td><td><input size="5" type="text" name="hair" id="hair"/><div class="small_font">HAIR</div></td><td><input size="10" type="text" name="skin" id="skin"/><div class="small_font">SKIN</div></td></tr>
+				</table></td></tr>
+				<tr>
+					<td rowspan="2" valign="top">
+						<!-- character attributes -->
+						<table>
+							<tr><th class="tab_header large_font">ABILITIES</th><th><div class="small_font">ABILITY<br>SCORE</div></th><th><div class="small_font">ABILITY<br>MODIFIER</div></th><th><div class="small_font">TEMPORARY<br>SCORE</div></th><th><div class="small_font">TEMPORARY<br>MODIFIER</div></th></tr>
+							<tr><th class="tab_title">STR<div class="small_font">STRENGTH</div></th><td class="tab_title" align="center"><input size="3" type="text" name="str" id="str" onkeyup="calcAbilityMod('str', 'str_mod')"/></td><td class="tab_title" align="center"><input size="3" type="text" name="str_mod" id="str_mod" disabled="disabled"/></td><td class="tab_header" align="center"><input size="3" type="text" name="str_temp" id="str_temp"/></td><td class="tab_header" align="center"><input size="3" type="text" name="str_temp_mod" id="str_temp_mod"/></td></tr>
+							<tr><th class="tab_title">DEX<div class="small_font">DEXTERITY</div></th><td class="tab_title" align="center"><input size="3" type="text" name="dex" id="dex" onkeyup="calcAbilityMod('dex', 'dex_mod')"/></td><td class="tab_title" align="center"><input size="3" type="text" name="dex_mod" id="dex_mod" disabled="disabled"/></td><td class="tab_header" align="center"><input size="3" type="text" name="dex_temp" id="dex_temp"/></td><td class="tab_header" align="center"><input size="3" type="text" name="dex_temp_mod" id="dex_temp_mod"/></td></tr>
+							<tr><th class="tab_title">CON<div class="small_font">CONSTITUTION</div></th><td class="tab_title" align="center"><input size="3" type="text" name="con" id="con" onkeyup="calcAbilityMod('con', 'con_mod')"/></td><td class="tab_title" align="center"><input size="3" type="text" name="con_mod" id="con_mod" disabled="disabled"/></td><td class="tab_header" align="center"><input size="3" type="text" name="con_temp" id="con_temp"/></td><td class="tab_header" align="center"><input size="3" type="text" name="con_temp_mod" id="con_temp_mod"/></td></tr>
+							<tr><th class="tab_title">INT<div class="small_font">INTELLIGENCE</div></th><td class="tab_title" align="center"><input size="3" type="text" name="int" id="int" onkeyup="calcAbilityMod('int', 'int_mod')"/></td><td class="tab_title" align="center"><input size="3" type="text" name="int_mod" id="int_mod" disabled="disabled"/></td><td class="tab_header" align="center"><input size="3" type="text" name="int_temp" id="int_temp"/></td><td class="tab_header" align="center"><input size="3" type="text" name="int_temp_mod" id="int_temp_mod"/></td></tr>
+							<tr><th class="tab_title">WIS<div class="small_font">WISDOM</div></th><td class="tab_title" align="center"><input size="3" type="text" name="wis" id="wis" onkeyup="calcAbilityMod('wis', 'wis_mod')"/></td><td class="tab_title" align="center"><input size="3" type="text" name="wis_mod" id="wis_mod" disabled="disabled"/></td><td class="tab_header" align="center"><input size="3" type="text" name="wis_temp" id="wis_temp"/></td><td class="tab_header" align="center"><input size="3" type="text" name="wis_temp_mod" id="wis_temp_mod"/></td></tr>
+							<tr><th class="tab_title">CHA<div class="small_font">CHARISMA</div></th><td class="tab_title" align="center"><input size="3" type="text" name="cha" id="cha" onkeyup="calcAbilityMod('cha', 'cha_mod')"/></td><td class="tab_title" align="center"><input size="3" type="text" name="cha_mod" id="cha_mod" disabled="disabled"/></td><td class="tab_header" align="center"><input size="3" type="text" name="cha_temp" id="cha_temp"/></td><td class="tab_header" align="center"><input size="3" type="text" name="cha_temp_mod" id="cha_temp_mod"/></td></tr>
+						</table>
+						<br/>
+						<!-- saving throws -->
+						<table align="left">
+							<tr><th class="tab_header large_font">SAVING THROWS</th><th class="large_font" align="center">TOTAL</th><td class="small_font" align="center">BASE<br>SAVE</td><td class="small_font" align="center">ABILITY<br>MODIFIER</td><td class="small_font" align="center">MISC<br>MODIFIER</td></tr>
+							<tr><td class="tab_title" align="center">FORTITUDE<div class="small_font">(CONSTITUTION)</div></td><td class="tab_title" align="center"><input size="3" type="text" name="total_fort" id="total_fort"/></td><td> = <input size="3" type="text" name="fort" id="fort"/> +</td><td><input size="3" type="text" name="con_mod" id="con_mod"/> +</td><td><input size="3" type="text" name="fort_misc_mod" id="fort_misc_mod"/></td></tr>
+							<tr><td class="tab_title" align="center">REFLEX<div class="small_font">(DEXTERITY)</div></td><td class="tab_title" align="center"><input size="3" type="text" name="total_ref" id="total_ref"/></td><td> = <input size="3" type="text" name="ref" id="ref"/> +</td><td><input size="3" type="text" name="dex_mod" id="dex_mod"/> +</td><td><input size="3" type="text" name="ref_misc_mod" id="ref_misc_mod"/></td></tr>
+							<tr><td class="tab_title" align="center">WILL<div class="small_font">(WISDOM)</div></td><td class="tab_title" align="center"><input size="3" type="text" name="total_wil" id="total_wil"/></td><td> = <input size="3" type="text" name="wil" id="wil"/> +</td><td><input size="3" type="text" name="wis_mod" id="wis_mod"/> +</td><td><input size="3" type="text" name="wil_misc_mod" id="wil_misc_mod"/></td></tr>
+						</table>
+						<br/>
+						<!-- combat -->
+						<table align="left">
+							<tr><th class="tab_header large_font">ATTACKS</th><th class="large_font" align="center">TOTAL</th><td class="small_font" align="center">BASE<br/>ATTACK BONUS</td><td class="small_font" align="center">STR<br/>MODIFIER</td><td class="small_font" align="center">SIZE<br/>MODIFIER</td><td class="small_font" align="center">MISC<br/>MODIFIER</td></tr>
+							<tr><td class="tab_title" align="center">MELEE<div class="small_font">attack bonus</div></td><td class="tab_title" align="center"><input size="8" type="text" name="melee" id="melee"/></td><td> = <input size="3" type="text" name="bab" id="bab"/> +</td><td><input size="3" type="text" name="str_mod" id="str_mod"/> +</td><td><input size="3" type="text" name="size_mod" id="size_mod"/> +</td><td><input size="3" type="text" name="melee_misc_mod" id="melee_misc_mod"/></td></tr>
+							<tr><td class="tab_title" align="center">RANGED<div class="small_font">attack bonus</div></td><td class="tab_title" align="center"><input size="8" type="text" name="ranged" id="ranged"/></td><td> = <input size="3" type="text" name="bab" id="bab"/> +</td><td><input size="3" type="text" name="dex_mod" id="dex_mod"/> +</td><td><input size="3" type="text" name="size_mod" id="size_mod"> +</td><td><input size="3" type="text" name="ranged_misc_mod" id="ranged_misc_mod"/></td></tr>
+							<tr><th></th><th class="large_font" align="center">TOTAL</th><td class="small_font" align="center">BASE<br/>ATTACK BONUS</td><td class="small_font" align="center">DEX<br/>MODIFIER</td><td class="small_font" align="center">SIZE<br/>MODIFIER</td><td class="small_font" align="center">MISC<br/>MODIFIER</td></tr>
+						</table>
+						<br/>
+						<!-- weapons table begin -->
+						<table>
+							<tr><td class="tab_title" colspan="3" align="center">WEAPON</td><td class="tab_title small_font" align="center">TOTAL ATTACK BONUS</td><td class="tab_title small_font" align="center">DAMAGE</td><td class="tab_title small_font" align="center">CRITICAL</td></tr>
+							<tr><td colspan="3"><input size="21" type="text" name="weapon_1_name" id="weapon_1_name"/></td><td><input size="10" type="text" name="weapon_1_total_attack_bonus" id="weapon_1_total_attack_bonus"/></td><td><input size="9" type="text" name="weapon_1_damage" id="weapon_1_damage"/></td><td><input size="9" type="text" name="weapon_1_critical" id="weapon_1_critical"/></td></tr>
+							<tr><td class="tab_title small_font" align="center">RANGE</td><td class="tab_title small_font" align="center">WEIGHT</td><td class="tab_title small_font" align="center">TYPE</td><td class="tab_title small_font" align="center">SIZE</td><td colspan="2" class="tab_title small_font" align="center">SPECIAL PROPERTIES</td></tr>
+							<tr><td><input size="3" type="text" name="weapon_1_range" id="weapon_1_range"/></td><td><input size="3" type="text" name="weapon_1_weight" id="weapon_1_weight"/></td><td><input size="5" type="text" name="weapon_1_type" id="weapon_1_type"/></td><td><input size="10" type="text" name="weapon_1_size" id="weapon_1_size"/></td><td colspan="2"><input size="25" type="text" name="weapon_1_special_properties" id="weapon_1_special_properties"/></td></tr>
+						</table>
+						<table>
+							<tr><td class="tab_title" colspan="3" align="center">WEAPON</td><td class="tab_title small_font" align="center">TOTAL ATTACK BONUS</td><td class="tab_title small_font" align="center">DAMAGE</td><td class="tab_title small_font" align="center">CRITICAL</td></tr>
+							<tr><td colspan="3"><input size="21" type="text" name="weapon_2_name" id="weapon_2_name"/></td><td><input size="10" type="text" name="weapon_2_total_attack_bonus" id="weapon_2_total_attack_bonus"/></td><td><input size="9" type="text" name="weapon_2_damage" id="weapon_2_damage"/></td><td><input size="9" type="text" name="weapon_2_critical" id="weapon_2_critical"/></td></tr>
+							<tr><td class="tab_title small_font" align="center">RANGE</td><td class="tab_title small_font" align="center">WEIGHT</td><td class="tab_title small_font" align="center">TYPE</td><td class="tab_title small_font" align="center">SIZE</td><td colspan="2" class="tab_title small_font" align="center">SPECIAL PROPERTIES</td></tr>
+							<tr><td><input size="3" type="text" name="weapon_2_range" id="weapon_2_range"/></td><td><input size="3" type="text" name="weapon_2_weight" id="weapon_2_weight"/></td><td><input size="5" type="text" name="weapon_2_type" id="weapon_2_type"/></td><td><input size="10" type="text" name="weapon_2_size" id="weapon_2_size"/></td><td colspan="2"><input size="25" type="text" name="weapon_2_special_properties" id="weapon_2_special_properties"/></td></tr>
+						</table>
+						<table>
+							<tr><td class="tab_title" colspan="3" align="center">WEAPON</td><td class="tab_title small_font" align="center">TOTAL ATTACK BONUS</td><td class="tab_title small_font" align="center">DAMAGE</td><td class="tab_title small_font" align="center">CRITICAL</td></tr>
+							<tr><td colspan="3"><input size="21" type="text" name="weapon_3_name" id="weapon_3_name"/></td><td><input size="10" type="text" name="weapon_3_total_attack_bonus" id="weapon_3_total_attack_bonus"/></td><td><input size="9" type="text" name="weapon_3_damage" id="weapon_3_damage"/></td><td><input size="9" type="text" name="weapon_3_critical" id="weapon_3_critical"/></td></tr>
+							<tr><td class="tab_title small_font" align="center">RANGE</td><td class="tab_title small_font" align="center">WEIGHT</td><td class="tab_title small_font" align="center">TYPE</td><td class="tab_title small_font" align="center">SIZE</td><td colspan="2" class="tab_title small_font" align="center">SPECIAL PROPERTIES</td></tr>
+							<tr><td><input size="3" type="text" name="weapon_3_range" id="weapon_3_range"/></td><td><input size="3" type="text" name="weapon_3_weight" id="weapon_3_weight"/></td><td><input size="5" type="text" name="weapon_3_type" id="weapon_3_type"/></td><td><input size="10" type="text" name="weapon_3_size" id="weapon_3_size"/></td><td colspan="2"><input size="25" type="text" name="weapon_3_special_properties" id="weapon_3_special_properties"/></td></tr>
+						</table>
+						<table>
+							<tr><td class="tab_title" colspan="3" align="center">WEAPON</td><td class="tab_title small_font" align="center">TOTAL ATTACK BONUS</td><td class="tab_title small_font" align="center">DAMAGE</td><td class="tab_title small_font" align="center">CRITICAL</td></tr>
+							<tr><td colspan="3"><input size="21" type="text" name="weapon_4_name" id="weapon_4_name"/></td><td><input size="10" type="text" name="weapon_4_total_attack_bonus" id="weapon_4_total_attack_bonus"/></td><td><input size="9" type="text" name="weapon_4_damage" id="weapon_4_damage"/></td><td><input size="9" type="text" name="weapon_4_critical" id="weapon_4_critical"/></td></tr>
+							<tr><td class="tab_title small_font" align="center">RANGE</td><td class="tab_title small_font" align="center">WEIGHT</td><td class="tab_title small_font" align="center">TYPE</td><td class="tab_title small_font" align="center">SIZE</td><td colspan="2" class="tab_title small_font" align="center">SPECIAL PROPERTIES</td></tr>
+							<tr><td><input size="3" type="text" name="weapon_4_range" id="weapon_4_range"/></td><td><input size="3" type="text" name="weapon_4_weight" id="weapon_4_weight"/></td><td><input size="5" type="text" name="weapon_4_type" id="weapon_4_type"/></td><td><input size="10" type="text" name="weapon_4_size" id="weapon_4_size"/></td><td colspan="2"><input size="25" type="text" name="weapon_4_special_properties" id="weapon_4_special_properties"/></td></tr>
+						</table>
+						<!-- weapons table end -->
+						<table>
+							<tr><td class="tab_title medium_font" colspan="3" align="center">ARMOR/PROTECTIVE ITEM</td><td class="tab_title small_font" align="center">TYPE</td><td class="tab_title small_font" align="center">EQUIPMENT BONUS</td><td class="tab_title small_font" align="center">PROFICIENT?</td></tr>
+							<tr><td colspan="3"><input size="21" type="text" name="armor_name" id="armor_name"/></td><td><input size="3" type="text" name="armor_type" id="armor_type"/></td><td><input size="9" type="text" name="armor_equipment_bonus" id="armor_equipment_bonus"/></td><td>Yes <input type="checkbox" name="armor_proficient" id="armor_proficient"/></td></tr>
+							<tr><td class="tab_title small_font" align="center">ARMOR<br>PENALTY</td><td class="tab_title small_font" align="center">WEIGHT</td><td class="tab_title small_font" align="center">SPEED</td><td class="tab_title small_font" align="center">SIZE</td><td class="tab_title small_font" align="center">MAX DEX</td><td class="tab_title small_font" align="center">SPECIAL PROPERTIES</td></tr>
+							<tr><td><input size="3" type="text" name="armor_penalty" id="armor_penalty"/></td><td><input size="3" type="text" name="armor_weight" id="armor_weight"/></td><td><input size="5" type="text" name="armor_speed" id="armor_speed"/></td><td><input size="3" type="text" name="armor_size" id="armor_size"/></td><td><input size="9" type="text" name="max_dex" id="max_dex"/></td><td><input size="18" type="text" name="armor_special_properties" id="armor_special_properties"/></td></tr>
+						</table>
+						<!-- misc text input begin -->
+						<table>
+							<tr><td><input size="66" type="text" name="campaign" id="campaign"/><div style="font-size:12">CAMPAIGN</div></td></tr>
+							<tr><td><input size="66" type="text" name="xp" id="xp"/><div style="font-size:12">EXPERIENCE POINTS</div></td></tr>
+						</table>
+						<table>
+							<tr><td class="tab_title" colspan="2" align="center">GEAR</td></tr>
+							<tr><td class="large_font" align="center">ITEM | WEIGHT</td></tr>
+							<tr><td><textarea rows="14" cols="50" style="resize: vertical;" name="gear" id="gear"/></textarea></td></tr>
+						</table>
+						<table>
+							<tr><td class="tab_title" align="center">ALLEGIANCES</td></tr>
+							<tr><td><textarea rows="3" cols="50" style="resize: vertical;" name="allegiances" id="allegiances"></textarea></td></tr>
+						</table>
+						<table>
+							<tr><td class="tab_title" colspan="2" align="center">LANGUAGES</td></tr>
+							<tr><td class="large_font" align="center">LANGUAGE | READ/WRITE</td></tr>
+							<tr><td><textarea rows="14" cols="50" style="resize: vertical;" name="language" id="language"/></textarea></td></tr>
+						</table>
+						<table>
+							<tr><td class="tab_title" colspan="3" align="center">FX ABILITIES</td></tr>
+							<tr><td class="large_font" align="center">ARCANE SPELLS</td><td class="large_font" align="center">DIVINE SPELLS</td><td class="large_font" align="center">PSIONIC SPELLS</td></tr>
+							<tr><td><textarea rows="14" cols="14" style="resize: none;" name="arcane_spells" id="arcane_spells"/></textarea></td><td><textarea rows="14" cols="14" style="resize: none;" name="divine_spells" id="divine_spells"/></textarea></td><td><textarea rows="14" cols="14" style="resize: none;" name="psionic_spells" id="psionic_spells"/></textarea></td></tr>
+						</table>
+						<table>
+							<tr><td class="tab_title" align="center">TALENTS/SPECIAL ABILITIES</td></tr>
+							<tr><td><textarea rows="14" cols="50" style="resize: vertical;" name="talents" id="talents"/></textarea></td></tr>
+						</table>
+						<!-- misc text input end -->
+					</td>
+					<td valign="top">
+						<table>
+							<tr><td></td><th class="large_font" align="center">TOTAL</th><td colspan="7" class="small_font" align="center">CURRENT HP</td></tr>
+							<tr><td class="tab_title" align="center">HP<br><div class="small_font">HIT POINTS</div></td><td><input size="3" type="text" name="total_hp" id="total_hp"/></td><td colspan="7"><input size="54" type="text" name="current_hp" id="current_hp"/></td></tr>
+							<tr><td class="tab_title" align="center">DEFENSE</td><td><input size="3" type="text" name="defense_total" id="defense_total"/></td><td class="large_font" align="center">10 +</td><td align="center"><input size="3" type="text" name="class_bonus" id="class_bonus"/> + </td><td align="center"><input size="3" type="text" name="equipment_bonus" id="equipment_bonus"/> + </td><td align="center"><input size="3" type="text" name="dex_mod" id="dex_mod"/> + </td><td align="center"><input size="3" type="text" name="size_mod" id="size_mod"/> + </td><td align="center"><input size="3" type="text" name="defense_misc_bonus" id="defense_misc_bonus"/></td><td align="center"><input size="3" type="text" name="armor_penalty" id="armor_penalty"/></td></tr>
+							<tr><td></td><th class="large_font" align="center">TOTAL</th><td></td><td class="small_font" align="center">CLASS<br>BONUS</td><td class="small_font" align="center">EQUIPMENT<br>BONUS</td><td class="small_font" align="center">DEX<br>MODIFIER</td><td class="small_font" align="center">SIZE<br>MODIFIER</td><td class="small_font" align="center">MISC<br>BONUS</td><td class="small_font" align="center">ARMOR<br>PENALTY</td></tr>
+						</table>
+						<table>
+							<tr>
+								<td valign="top">
+									<table>
+										<tr><td class="tab_title" align="center">INITIATIVE<br><div class="small_font">MODIFIER</div></td><td><input size="3" type="text" name="init_total" id="init_total"/> =</td><td><input size="3" type="text" name="dex_mod" id="dex_mod"/> +</td><td><input size="3" type="text" name="init_misc_mod" id="init_misc_mod"/></td></tr>
+										<tr><td></td><th class="large_font" align="center">TOTAL</th><td class="small_font" align="center">DEX<br>MODIFIER</td><td class="small_font" align="center">MISC<br>MODIFIER</td></tr>
+										<tr><td class="tab_title" colspan="2" align="center">BASE ATTACK<br><div class="small_font">BONUS</div></td><td colspan="2"><input size="13" type="text" name="bab" id="bab"/></td></tr>
+										<tr><td class="tab_title" colspan="2" align="center">SPEED</td><td colspan="2"><input size="13" type="text" name="speed" id="speed"/></td></tr>
+									</table>
+								</td>
+								<td>
+									<table>
+										<tr><td class="tab_title" align="center">REPUTATION</td><td class="tab_title" align="center"><input size="3" type="text" name="reputation" id="reputation"/></td></tr>
+										<tr><td class="tab_title" align="center">ACTION POINTS</td><td class="tab_title" align="center"><input size="3" type="text" name="action_points" id="action_points"/></td></tr>
+										<tr><td class="tab_title" align="center">WEALTH BONUS</td><td class="tab_title" align="center"><input size="3" type="text" name="wealth_bonus" id="wealth_bonus"/></td></tr>
+									</table>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<!-- skills table and auto calculate from jscript begin -->
+									<table>
+										<tr><td rowspan="2" style="background-color: black; color: white; font-size: 10px;" align="center">x<br>c<br>l<br>a<br>s<br>s</td><td colspan="4" class="tab_title" align="center">SKILLS</td><td class="tab_title small_font" colspan="2" align="center">MAX RANKS <input size="2" type="text"> / <input size="2" type="text"></td></tr>
+										<tr><th style="border: 1px solid black;" align="left">SKILL NAME</th><td class="tab_border small_font" align="center">KEY<br>ABILITY</td><td class="tab_border small_font" align="center">SKILL<br>MODIFIER</td><td class="tab_border small_font" align="center">ABILITY<br>MODIFIER</td><td class="tab_border small_font" align="center">RANKS</td><td class="tab_border small_font" align="center">MISC<br>MODIFIER</td></tr>
+										<tr><td><input type="checkbox" name="balance" id="balance"/></td><td class="medium_font">Balance</td><td class="medium_font" align="center">Dex</td><td><input size="2" type="text" name="total_balance" id="total_balance"/> =</td><td><input size="2" type="text" name="dex_mod" id="dex_mod"/> +</td><td><input size="2" type="text" name="balance_ranks" id="balance_ranks"/> +</td><td><input size="2" type="text" name="balance_misc_mod" id="balance_misc_mod"/></td></tr>
+										<tr><td><input type="checkbox" name="bluff" id="bluff"/></td><td class="medium_font">Bluff</td><td class="medium_font" align="center">Cha</td><td><input size="2" type="text" name="total_bluff" id="total_bluff"/> =</td><td><input size="2" type="text" name="cha_mod" id="cha_mod"/> +</td><td><input size="2" type="text" name="bluff_ranks" id="bluff_ranks"/> +</td><td><input size="2" type="text" name="bluff_misc_mod" id="bluff_misc_mod"/></td></tr>
+										<tr><td><input type="checkbox" name="climb" id="climb"/></td><td class="medium_font">Climb</td><td class="medium_font" align="center">Str</td><td><input size="2" type="text" name="total_climb" id="total_climb"/> =</td><td><input size="2" type="text" name="str_mod" id="str_mod"/> +</td><td><input size="2" type="text" name="climb_ranks" id="climb_ranks"/> +</td><td><input size="2" type="text" name="climb_misc_mod" id="climb_misc_mod"/></td></tr>
+										<tr><td><input type="checkbox" name="computer_use" id="computer_use"/></td><td class="medium_font">Computer Use</td><td class="medium_font" align="center">Int</td><td><input size="2" type="text" name="total_computer_use" id="total_computer_use"/> =</td><td><input size="2" type="text" name="int_mod" id="int_mod"/> +</td><td><input size="2" type="text" name="computer_use_ranks" id="computer_use_ranks"/> +</td><td><input size="2" type="text" name="computer_use_misc_mod" id="computer_use_misc_mod"/></td></tr>
+										<tr><td><input type="checkbox" name="concentration" id="concentration"/></td><td class="medium_font">Concentration</td><td class="medium_font" align="center">Con</td><td><input size="2" type="text" name="total_concentration" id="total_concentration"/> =</td><td><input size="2" type="text" name="con_mod" id="con_mod"/> +</td><td><input size="2" type="text" name="concentration_ranks" id="concntration_ranks"/> +</td><td><input size="2" type="text" name="concentration_misc_mod" id="concntration_misc_mod"/></td></tr>
+										<tr><td><input type="checkbox" name="craft_1" id="craft_1"/></td><td class="medium_font">Craft (<input size="18" type="text" name="craft_1_name" id="craft_1_name"/>)</td><td class="medium_font" align="center">Int</td><td><input size="2" type="text" name="total_craft_1" id="total_craft_1"/> =</td><td><input size="2" type="text" name="int_mod" id="int_mod"/> +</td><td><input size="2" type="text" name="craft_1_ranks" id="craft_1_ranks"/> +</td><td><input size="2" type="text" name="craft_1_misc_mod" id="craft_1_misc_mod"/></td></tr>
+										<tr><td><input type="checkbox" name="craft_2" id="craft_2"/></td><td class="medium_font">Craft (<input size="18" type="text" name="craft_2_name" id="craft_2_name"/>)</td><td class="medium_font" align="center">Int</td><td><input size="2" type="text" name="total_craft_2" id="total_craft_2"/> =</td><td><input size="2" type="text" name="int_mod" id="int_mod"/> +</td><td><input size="2" type="text" name="craft_2_ranks" id="craft_2_ranks"/> +</td><td><input size="2" type="text" name="craft_2_misc_mod" id="craft_2_misc_mod"/></td></tr>
+										<tr><td><input type="checkbox" name="craft_3" id="craft_3"/></td><td class="medium_font">Craft (<input size="18" type="text" name="craft_3_name" id="craft_3_name"/>)</td><td class="medium_font" align="center">Int</td><td><input size="2" type="text" name="total_craft_3" id="total_craft_3"/> =</td><td><input size="2" type="text" name="int_mod" id="int_mod"/> +</td><td><input size="2" type="text" name="craft_3_ranks" id="craft_3_ranks"/> +</td><td><input size="2" type="text" name="craft_3_misc_mod" id="craft_3_misc_mod"/></td></tr>
+										<tr><td><input type="checkbox" name="decipher_script" id="decipher_script"/></td><td><table><tr><td class="medium_font">Decipher Script</td><td style="background-color: black; font-size: 10px;">__</td></tr></table></td><td class="medium_font" align="center">Int</td><td><input size="2" type="text" name="total_decipher_script" id="total_decipher_script"/> =</td><td><input size="2" type="text" name="int_mod" id="int_mod"/> +</td><td><input size="2" type="text" name="decipher_script_ranks" id="decipher_script_ranks"/> +</td><td><input size="2" type="text" name="decipher_script_misc_mod" id="decipher_script_misc_mod"/></td></tr>
+										<tr><td><input type="checkbox" name="demolitions" id="demolitions"/></td><td><table><tr><td class="medium_font">Demolitions</td><td style="background-color: black; font-size: 10px;">__</td></tr></table></td><td class="medium_font" align="center">Int</td><td><input size="2" type="text" name="total_demolitions" id="total_demolitions"/> =</td><td><input size="2" type="text" name="int_mod" id="int_mod"/> +</td><td><input size="2" type="text" name="demolitions_ranks" id="demolitions_ranks"/> +</td><td><input size="2" type="text" name="demolitions_misc_mod" id="demolitions_misc_mod"/></td></tr>
+										<tr><td><input type="checkbox" name="diplomacy" id="diplomacy"/></td><td class="medium_font">Diplomacy</td><td class="medium_font" align="center">Cha</td><td><input size="2" type="text" name="total_diplomacy" id="total_diplomacy"/> =</td><td><input size="2" type="text" name="cha_mod" id="cha_mod"/> +</td><td><input size="2" type="text" name="diplomacy_ranks" id="diplomacy_ranks"/> +</td><td><input size="2" type="text" name="diplomacy_misc_mod" id="diplomacy_misc_mod"/></td></tr>
+										<tr><td><input type="checkbox" name="disable_device" id="disable_device"/></td><td><table><tr><td class="medium_font">Disable Device</td><td style="background-color: black; font-size: 10px;">__</td></tr></table></td><td class="medium_font" align="center">Int</td><td><input size="2" type="text" name="total_" id="total_disable_device"/> =</td><td><input size="2" type="text" name="int_mod" id="int_mod"/> +</td><td><input size="2" type="text" name="disable_device_ranks" id="disable_device_ranks"/> +</td><td><input size="2" type="text" name="disable_device_misc_mod" id="disable_device_misc_mod"/></td></tr>
+										<tr><td><input type="checkbox" name="disguise" id="disguise"/></td><td class="medium_font">Disguise</td><td class="medium_font" align="center">Cha</td><td><input size="2" type="text" name="total_disguise" id="total_disguise"/> =</td><td><input size="2" type="text" name="cha_mod" id="cha_mod"/> +</td><td><input size="2" type="text" name="disguise_ranks" id="disguise_ranks"/> +</td><td><input size="2" type="text" name="disguise_misc_mod" id="disguise_misc_mod"/></td></tr>
+										<tr><td><input type="checkbox" name="drive" id="drive"/></td><td class="medium_font">Drive</td><td class="medium_font" align="center">Dex</td><td><input size="2" type="text" name="total_drive" id="total_drive"/> =</td><td><input size="2" type="text" name="dex_mod" id="dex_mod"/> +</td><td><input size="2" type="text" name="drive_ranks" id="drive_ranks"/> +</td><td><input size="2" type="text" name="drive_misc_mod" id="drive_misc_mod"/></td></tr>
+										<tr><td><input type="checkbox" name="escape_artist" id="escape_artist"/></td><td class="medium_font">Escape Artist</td><td class="medium_font" align="center">Dex*</td><td><input size="2" type="text" name="total_escape_artist" id="total_escape_artist"/> =</td><td><input size="2" type="text" name="dex_mod" id="dex_mod"/> +</td><td><input size="2" type="text" name="escape_artist_ranks" id="escape_artist_ranks"/> +</td><td><input size="2" type="text" name="escape_artist_misc_mod" id="escape_artist_misc_mod"/></td></tr>
+										<tr><td><input type="checkbox" name="forgery" id="forgery"/></td><td class="medium_font">Forgery</td><td class="medium_font" align="center">Int</td><td><input size="2" type="text" name="total_forgery" id="total_forgery"/> =</td><td><input size="2" type="text" name="int_mod" id="int_mod"/> +</td><td><input size="2" type="text" name="forgery_ranks" id="forgery_ranks"/> +</td><td><input size="2" type="text" name="forgery_misc_mod" id="forgery_misc_mod"/></td></tr>
+										<tr><td><input type="checkbox" name="gamble" id="gamble"/></td><td class="medium_font">Gamble</td><td class="medium_font" align="center">Wis</td><td><input size="2" type="text" name="total_gamble" id="total_gamble"/> =</td><td><input size="2" type="text" name="wis_mod" id="wis_mod"/> +</td><td><input size="2" type="text" name="gamble_ranks" id="gamble_ranks"/> +</td><td><input size="2" type="text" name="gamble_misc_mod" id="gamble_misc_mod"/></td></tr>
+										<tr><td><input type="checkbox" name="gather_information" id="gather_information"/></td><td class="medium_font">Gather Information</td><td class="medium_font" align="center">Cha</td><td><input size="2" type="text" name="total_gather_information" id="total_gather_information"/> =</td><td><input size="2" type="text" name="cha_mod" id="cha_mod"/> +</td><td><input size="2" type="text" name="gather_information_ranks" id="gather_information_ranks"/> +</td><td><input size="2" type="text" name="gather_information_misc_mod" id="gather_information_misc_mod"/></td></tr>
+										<tr><td><input type="checkbox" name="handle_animal" id="handle_animal"/></td><td><table><tr><td class="medium_font">Handle Animal</td><td style="background-color: black; font-size: 10px;">__</td></tr></table></td><td class="medium_font" align="center">Cha</td><td><input size="2" type="text" name="total_handle_animal" id="total_handle_animal"/> =</td><td><input size="2" type="text" name="cha_mod" id="cha_mod"/> +</td><td><input size="2" type="text" name="handle_animal_ranks" id="handle_animal_ranks"/> +</td><td><input size="2" type="text" name="handle_animal_misc_mod" id="handle_animal_misc_mod"/></td></tr>
+										<tr><td><input type="checkbox" name="hide" id="hide"/></td><td class="medium_font">Hide</td><td class="medium_font" align="center">Dex*</td><td><input size="2" type="text" name="total_hide" id="total_hide"/> =</td><td><input size="2" type="text" name="dex_mod" id="dex_mod"/> +</td><td><input size="2" type="text" name="hide_ranks" id="hide_ranks"/> +</td><td><input size="2" type="text" name="hide_misc_mod" id="hide_misc_mod"/></td></tr>
+										<tr><td><input type="checkbox" name="intimidate" id="intimidate"/></td><td class="medium_font">Intimidate</td><td class="medium_font" align="center">Cha</td><td><input size="2" type="text" name="total_intimidate" id="total_intimidate"/> =</td><td><input size="2" type="text" name="cha_mod" id="cha_mod"/> +</td><td><input size="2" type="text" name="intimidate_ranks" id="intimidate_ranks"/> +</td><td><input size="2" type="text" name="intimidate_misc_mod" id="intimidate_misc_mod"/></td></tr>
+										<tr><td><input type="checkbox" name="investigate" id="investigate"/></td><td><table><tr><td class="medium_font">Investigate</td><td style="background-color: black; font-size: 10px;">__</td></tr></table></td><td class="medium_font" align="center">Int</td><td><input size="2" type="text" name="total_investigate" id="total_investigate"/> =</td><td><input size="2" type="text" name="int_mod" id="int_mod"/> +</td><td><input size="2" type="text" name="investigate_ranks" id="investigate_ranks"/> +</td><td><input size="2" type="text" name="investigate_misc_mod" id="investigate_misc_mod"/></td></tr>
+										<tr><td><input type="checkbox" name="jump" id="jump"/></td><td class="medium_font">Jump</td><td class="medium_font" align="center">Str*</td><td><input size="2" type="text" name="total_jump" id="total_jump"/> =</td><td><input size="2" type="text" name="str_mod" id="str_mod"/> +</td><td><input size="2" type="text" name="jump_ranks" id="jump_ranks"/> +</td><td><input size="2" type="text" name="jump_misc_mod" id="jump_misc_mod"/></td></tr>
+										<tr><td><input type="checkbox" name="knowledge_1" id="knowledge_1"/></td><td class="medium_font">Knowledge (<input size="13" type="text" name="knowledge_1_name" id="knowledge_1_name"/>)</td><td class="medium_font" align="center">Int</td><td><input size="2" type="text" name="total_knowledge_1" id="total_knowledge_1"/> =</td><td><input size="2" type="text" name="int_mod" id="int_mod"/> +</td><td><input size="2" type="text" name="knowledge_1_ranks" id="knowledge_1_ranks"/> +</td><td><input size="2" type="text" name="knowledge_1_misc_mod" id="knowledge_1_misc_mod"/></td></tr>
+										<tr><td><input type="checkbox" name="knowledge_2" id="knowledge_2"/></td><td class="medium_font">Knowledge (<input size="13" type="text" name="knowledge_2_name" id="knowledge_2_name"/>)</td><td class="medium_font" align="center">Int</td><td><input size="2" type="text" name="total_knowledge_2" id="total_knowledge_2"/> =</td><td><input size="2" type="text" name="int_mod" id="int_mod"/> +</td><td><input size="2" type="text" name="knowledge_2_ranks" id="knowledge_2_ranks"/> +</td><td><input size="2" type="text" name="knowledge_2_misc_mod" id="knowledge_2_misc_mod"/></td></tr>
+										<tr><td><input type="checkbox" name="knowledge_3" id="knowledge_3"/></td><td class="medium_font">Knowledge (<input size="13" type="text" name="knowledge_3_name" id="knowledge_3_name"/>)</td><td class="medium_font" align="center">Int</td><td><input size="2" type="text" name="total_knowledge_3" id="total_knowledge_3"/> =</td><td><input size="2" type="text" name="int_mod" id="int_mod"/> +</td><td><input size="2" type="text" name="knowledge_3_ranks" id="knowledge_3_ranks"/> +</td><td><input size="2" type="text" name="knowledge_3_misc_mod" id="knowledge_3_misc_mod"/></td></tr>
+										<tr><td><input type="checkbox" name="listen" id="listen"/></td><td class="medium_font">Listen</td><td class="medium_font" align="center">Wis</td><td><input size="2" type="text" name="total_listen" id="total_listen"/> =</td><td><input size="2" type="text" name="wis_mod" id="wis_mod"/> +</td><td><input size="2" type="text" name="listen_ranks" id="listen_ranks"/> +</td><td><input size="2" type="text" name="listen_misc_mod" id="listen_misc_mod"/></td></tr>
+										<tr><td><input type="checkbox" name="move_silently" id="move_silently"/></td><td class="medium_font">Move Silently</td><td class="medium_font" align="center">Dex*</td><td><input size="2" type="text" name="total_move_silently" id="total_move_silently"/> =</td><td><input size="2" type="text" name="dex_mod" id="dex_mod"/> +</td><td><input size="2" type="text" name="move_silently_ranks" id="move_silently_ranks"/> +</td><td><input size="2" type="text" name="move_silently_misc_mod" id="move_silently_misc_mod"/></td></tr>
+										<tr><td><input type="checkbox" name="navigate" id="navigate"/></td><td class="medium_font">Navigate</td><td class="medium_font" align="center">Int</td><td><input size="2" type="text" name="total_navigate" id="total_navigate"/> =</td><td><input size="2" type="text" name="int_mod" id="int_mod"/> +</td><td><input size="2" type="text" name="navigate_ranks" id="navigate_ranks"/> +</td><td><input size="2" type="text" name="navigate_misc_mod" id="navigate_misc_mod"/></td></tr>
+										<tr><td><input type="checkbox" name="perform_1" id="perform_1"/></td><td class="medium_font">Perform (<input size="16" type="text" name="perform_1_name" id="perform_1_name"/>)</td><td class="medium_font" align="center">Cha</td><td><input size="2" type="text" name="total_perform_1" id="total_perform_1"/> =</td><td><input size="2" type="text" name="cha_mod" id="cha_mod"/> +</td><td><input size="2" type="text" name="perform_1_ranks" id="perform_1_ranks"/> +</td><td><input size="2" type="text" name="perform_1_misc_mod" id="perform_1_misc_mod"/></td></tr>
+										<tr><td><input type="checkbox" name="perform_2" id="perform_2"/></td><td class="medium_font">Perform (<input size="16" type="text" name="perform_2_name" id="perform_2_name"/>)</td><td class="medium_font" align="center">Cha</td><td><input size="2" type="text" name="total_perform_2" id="total_perform_2"/> =</td><td><input size="2" type="text" name="cha_mod" id="cha_mod"/> +</td><td><input size="2" type="text" name="perform_2_ranks" id="perform_2_ranks"/> +</td><td><input size="2" type="text" name="perform_2_misc_mod" id="perform_2_misc_mod"/></td></tr>
+										<tr><td><input type="checkbox" name="perform_3" id="perform_3"/></td><td class="medium_font">Perform (<input size="16" type="text" name="perform_3_name" id="perform_3_name"/>)</td><td class="medium_font" align="center">Cha</td><td><input size="2" type="text" name="total_perform_3" id="total_perform_3"/> =</td><td><input size="2" type="text" name="cha_mod" id="cha_mod"/> +</td><td><input size="2" type="text" name="perform_3_ranks" id="perform_3_ranks"/> +</td><td><input size="2" type="text" name="perform_3_misc_mod" id="perform_3_misc_mod"/></td></tr>
+										<tr><td><input type="checkbox" name="pilot" id="pilot"/></td><td><table><tr><td class="medium_font">Pilot</td><td style="background-color: black; font-size: 10px;">__</td></tr></table></td><td class="medium_font" align="center">Dex</td><td><input size="2" type="text" name="total_pilot" id="total_pilot"/> =</td><td><input size="2" type="text" name="dex_mod" id="dex_mod"/> +</td><td><input size="2" type="text" name="pilot_ranks" id="pilot_ranks"/> +</td><td><input size="2" type="text" name="pilot_misc_mod" id="pilot_misc_mod"/></td></tr>
+										<tr><td><input type="checkbox" name="profession" id="profession"/></td><td class="medium_font">Profession</td><td class="medium_font" align="center">Wis</td><td><input size="2" type="text" name="total_profession" id="total_profession"/> =</td><td><input size="2" type="text" name="wis_mod" id="wis_mod"/> +</td><td><input size="2" type="text" name="profession_ranks" id="profession_ranks"/> +</td><td><input size="2" type="text" name="profession_misc_mod" id="profession_misc_mod"/></td></tr>
+										<tr><td><input type="checkbox" name="read_write_lang_1" id="read_write_lang_1"/></td><td class="medium_font">Read/Write Lang. (<input size="10" type="text" name="read_write_lang_1_name" id="read_write_lang_1_name"/>)</td><td class="medium_font" align="center"> - </td><td><input size="2" type="text" name="total_read_write_lang_1" id="total_read_write_lang_1"/> =</td><td></td><td><input size="2" type="text" name="read_write_lang_1_ranks" id="read_write_lang_1_ranks"/> +</td><td><input size="2" type="text" name="read_write_lang_1_misc_mod" id="read_write_lang_1_misc_mod"/></td></tr>
+										<tr><td><input type="checkbox" name="read_write_lang_2" id="read_write_lang_2"/></td><td class="medium_font">Read/Write Lang. (<input size="10" type="text" name="read_write_lang_2_name" id="read_write_lang_2_name"/>)</td><td class="medium_font" align="center"> - </td><td><input size="2" type="text" name="total_read_write_lang_2" id="total_read_write_lang_2"/> =</td><td></td><td><input size="2" type="text" name="read_write_lang_2_ranks" id="read_write_lang_2_ranks"/> +</td><td><input size="2" type="text" name="read_write_lang_2_misc_mod" id="read_write_lang_2_misc_mod"/></td></tr>
+										<tr><td><input type="checkbox" name="read_write_lang_3" id="read_write_lang_3"/></td><td class="medium_font">Read/Write Lang. (<input size="10" type="text" name="read_write_lang_3_name" id="read_write_lang_3_name"/>)</td><td class="medium_font" align="center"> - </td><td><input size="2" type="text" name="total_read_write_lang_3" id="total_read_write_lang_3"/> =</td><td></td><td><input size="2" type="text" name="read_write_lang_3_ranks" id="read_write_lang_3_ranks"/> +</td><td><input size="2" type="text" name="read_write_lang_3_misc_mod" id="read_write_lang_3_misc_mod"/></td></tr>
+										<tr><td><input type="checkbox" name="repair" id="repair"/></td><td><table><tr><td class="medium_font">Repair</td><td style="background-color: black; font-size: 10px;">__</td></tr></table></td><td class="medium_font" align="center">Int</td><td><input size="2" type="text" name="total_repair" id="total_repair"/> =</td><td><input size="2" type="text" name="int_mod" id="int_mod"/> +</td><td><input size="2" type="text" name="repair_ranks" id="repair_ranks"/> +</td><td><input size="2" type="text" name="repair_misc_mod" id="repair_misc_mod"/></td></tr>
+										<tr><td><input type="checkbox" name="research" id="research"/></td><td class="medium_font">Research</td><td class="medium_font" align="center">Int</td><td><input size="2" type="text" name="total_research" id="total_research"/> =</td><td><input size="2" type="text" name="int_mod" id="int_mod"/> +</td><td><input size="2" type="text" name="research_ranks" id="research_ranks"/> +</td><td><input size="2" type="text" name="research_misc_mod" id="research_misc_mod"/></td></tr>
+										<tr><td><input type="checkbox" name="ride" id="ride"/></td><td class="medium_font">Ride</td><td class="medium_font" align="center">Dex</td><td><input size="2" type="text" name="total_ride" id="total_ride"/> =</td><td><input size="2" type="text" name="dex_mod" id="dex_mod"/> +</td><td><input size="2" type="text" name="ride_ranks" id="ride_ranks"/> +</td><td><input size="2" type="text" name="ride_misc_mod" id="ride_misc_mod"/></td></tr>
+										<tr><td><input type="checkbox" name="search" id="search"/></td><td class="medium_font">Search</td><td class="medium_font" align="center">Int</td><td><input size="2" type="text" name="total_search" id="total_search"/> =</td><td><input size="2" type="text" name="int_mod" id="int_mod"/> +</td><td><input size="2" type="text" name="search_ranks" id="search_ranks"/> +</td><td><input size="2" type="text" name="search_misc_mod" id="search_misc_mod"/></td></tr>
+										<tr><td><input type="checkbox" name="sense_motive" id="sense_motive"/></td><td class="medium_font">Sense Motive</td><td class="medium_font" align="center">Wis</td><td><input size="2" type="text" name="total_sense_motive" id="total_sense_motive"/> =</td><td><input size="2" type="text" name="wis_mod" id="wis_mod"/> +</td><td><input size="2" type="text" name="sense_motive_ranks" id="sense_motive_ranks"/> +</td><td><input size="2" type="text" name="sense_motive_misc_mod" id="sense_motive_misc_mod"/></td></tr>
+										<tr><td><input type="checkbox" name="sleight_of_hand" id="sleight_of_hand"/></td><td><table><tr><td class="medium_font">Sleight of Hand</td><td style="background-color: black; font-size: 10px;">__</td></tr></table></td><td class="medium_font" align="center">Dex</td><td><input size="2" type="text" name="total_sleight_of_hand" id="total_sleight_of_hand"/> =</td><td><input size="2" type="text" name="dex_mod" id="dex_mod"/> +</td><td><input size="2" type="text" name="sleight_of_hand_ranks" id="sleight_of_hand_ranks"/> +</td><td><input size="2" type="text" name="sleight_of_hand_misc_mod" id="sleight_of_hand_misc_mod"/></td></tr>
+										<tr><td><input type="checkbox" name="speak_language_1" id="speak_language_1"/></td><td class="medium_font">Speak Language (<input size="10" type="text" name="speak_language_1_name" id="speak_language_1_name"/>)</td><td class="medium_font" align="center"> - </td><td><input size="2" type="text" name="total_speak_language_1" id="total_speak_language_1"/> =</td><td></td><td><input size="2" type="text" name="speak_language_1_ranks" id="speak_language_1_ranks"/> +</td><td><input size="2" type="text" name="speak_language_1_misc_mod" id="speak_language_1_misc_mod"/></td></tr>
+										<tr><td><input type="checkbox" name="speak_language_2" id="speak_language_2"/></td><td class="medium_font">Speak Language (<input size="10" type="text" name="speak_language_2_name" id="speak_language_2_name"/>)</td><td class="medium_font" align="center"> - </td><td><input size="2" type="text" name="total_speak_language_2" id="total_speak_language_2"/> =</td><td></td><td><input size="2" type="text" name="speak_language_2_ranks" id="speak_language_2_ranks"/> +</td><td><input size="2" type="text" name="speak_language_2_misc_mod" id="speak_language_2_misc_mod"/></td></tr>
+										<tr><td><input type="checkbox" name="speak_language_3" id="speak_language_3"/></td><td class="medium_font">Speak Language (<input size="10" type="text" name="speak_language_3_name" id="speak_language_3_name"/>)</td><td class="medium_font" align="center"> - </td><td><input size="2" type="text" name="total_speak_language_3" id="total_speak_language_3"/> =</td><td></td><td><input size="2" type="text" name="speak_language_3_ranks" id="speak_language_3_ranks"/> +</td><td><input size="2" type="text" name="speak_language_3_misc_mod" id="speak_language_3_misc_mod"/></td></tr>
+										<tr><td><input type="checkbox" name="spot" id="spot"/></td><td class="medium_font">Spot</td><td class="medium_font" align="center">Wis</td><td><input size="2" type="text" name="total_spot" id="total_spot"/> =</td><td><input size="2" type="text" name="wis_mod" id="wis_mod"/> +</td><td><input size="2" type="text" name="spot_ranks" id="spot_ranks"/> +</td><td><input size="2" type="text" name="spot_misc_mod" id="spot_misc_mod"/></td></tr>
+										<tr><td><input type="checkbox" name="survival" id="survival"/></td><td class="medium_font">Survival</td><td class="medium_font" align="center">Wis</td><td><input size="2" type="text" name="total_survival" id="total_survival"/> =</td><td><input size="2" type="text" name="wis_mod" id="wis_mod"/> +</td><td><input size="2" type="text" name="survival_ranks" id="survival_ranks"/> +</td><td><input size="2" type="text" name="survival_misc_mod" id="survival_misc_mod"/></td></tr>
+										<tr><td><input type="checkbox" name="swim" id="swim"/></td><td class="medium_font">Swim</td><td class="medium_font" align="center">Str*</td><td><input size="2" type="text" name="total_swim" id="total_swim"/> =</td><td><input size="2" type="text" name="str_mod" id="str_mod"/> +</td><td><input size="2" type="text" name="swim_ranks" id="swim_ranks"/> +</td><td><input size="2" type="text" name="swim_misc_mod" id="swim_misc_mod"/></td></tr>
+										<tr><td><input type="checkbox" name="treat_injury" id="treat_injury"/></td><td class="medium_font">Treat Injury</td><td class="medium_font" align="center">Wis</td><td><input size="2" type="text" name="total_treat_injury" id="total_treat_injury"/> =</td><td><input size="2" type="text" name="wis_mod" id="wis_mod"/> +</td><td><input size="2" type="text" name="treat_injury_ranks" id="treat_injury_ranks"/> +</td><td><input size="2" type="text" name="treat_injury_misc_mod" id="treat_injury_misc_mod"/></td></tr>
+										<tr><td><input type="checkbox" name="tumble" id="tumble"/></td><td><table><tr><td class="medium_font">Tumble</td><td style="background-color: black; font-size: 10px;">__</td></tr></table></td><td class="medium_font" align="center">Dex*</td><td><input size="2" type="text" name="total_tumble" id="total_tumble"/> =</td><td><input size="2" type="text" name="dex_mod" id="dex_mod"/> +</td><td><input size="2" type="text" name="tumble_ranks" id="tumble_ranks"/> +</td><td><input size="2" type="text" name="tumble_misc_mod" id="tumble_misc_mod"/></td></tr>
+										<tr><td><input type="checkbox" name="skill_1" id="skill_1"/></td><td><input size="17" type="text" name="skill_1_name" id="skill_1_name"/></td><td align="center"/><input size="3" type="text" name="skill_1_key_ability" id="skill_1_key_ability"/></td><td><input size="2" type="text" name="total_skill_1" id="total_skill_1"/> =</td><td><input size="2" type="text" name="skill_1_ability_mod" id="skill_1_ability_mod"/> +</td><td><input size="2" type="text" name="skill_1_ranks" id="skill_1_ranks"/> +</td><td><input size="2" type="text" name="skill_1_misc_mod" id="skill_1_misc_mod"/></td></tr>
+										<tr><td><input type="checkbox" name="skill_2" id="skill_2"/></td><td><input size="17" type="text" name="skill_2_name" id="skill_2_name"/></td><td align="center"/><input size="3" type="text" name="skill_2_key_ability" id="skill_2_key_ability"/></td><td><input size="2" type="text" name="total_skill_2" id="total_skill_2"/> =</td><td><input size="2" type="text" name="skill_2_ability_mod" id="skill_2_ability_mod"/> +</td><td><input size="2" type="text" name="skill_2_ranks" id="skill_2_ranks"/> +</td><td><input size="2" type="text" name="skill_2_misc_mod" id="skill_2_misc_mod"/></td></tr>
+										<tr><td><input type="checkbox" name="skill_3" id="skill_3"/></td><td><input size="17" type="text" name="skill_3_name" id="skill_3_name"/></td><td align="center"/><input size="3" type="text" name="skill_3_key_ability" id="skill_3_key_ability"/></td><td><input size="2" type="text" name="total_skill_3" id="total_skill_3"/> =</td><td><input size="2" type="text" name="skill_3_ability_mod" id="skill_3_ability_mod"/> +</td><td><input size="2" type="text" name="skill_3_ranks" id="skill_3_ranks"/> +</td><td><input size="2" type="text" name="skill_3_misc_mod" id="skill_3_misc_mod"/></td></tr>
+									</table>
+									<table>
+										<tr><td class="medium_font">Skills marked with </td><td style="background-color: black; font-size: 10px;">__</td><td class="medium_font"> can't be used untrained. *ARMOR PENALTY, if any, applies.</td></tr>
+									</table>
+									<!-- skills table and auto calculate from jscript end -->
+								</td>
+							</tr>
+							<!-- feats table -->
+							<tr class="tab_title" align="center"><td colspan="2">FEATS</td></tr>
+							<tr colspan="2">
+								<td valign="top">
+									<table>
+										<tr><td class="medium_font"><input type="checkbox" name="acrobatic" id="acrobatic"/> Acrobatic</td></tr>
+										<tr><td class="medium_font"><input type="checkbox" name="aircraft_operation" id="aircraft_operation"/> Aircraft Operation*</td></tr>
+										<tr><td class="medium_font"><input type="checkbox" name="alertness" id="alertness"/> Alertness</td></tr>
+										<tr><td class="medium_font"><input type="checkbox" name="animal_affinity" id="animal_affinity"/> Animal Affinity</td></tr>
+										<tr><td class="medium_font"><input type="checkbox" name="archaic_weapons_proficiency" id="archaic_weapons_proficiency"/> Archaic Weapons Proficiency</td></tr>
+										<tr>
+											<td class="medium_font">
+												<input type="checkbox" name="armor_proficiency_light" id="armor_proficiency_light"/> Armor Proficiency (light)
+												<ul>
+													<li><input type="checkbox" name="armor_proficiency_medium" id="armor_proficiency_medium"/> Armor Proficiency (medium)
+														<ul>
+															<li><input type="checkbox" name="armor_proficiency_heavy" id="armor_proficiency_heavy"/> Armor Proficiency (heavy)</li>
+														</ul>
+													</li>
+												</ul>
+											</td>
+										</tr>
+										<tr><td class="medium_font"><input type="checkbox" name="athletic" id="athletic"/> Athletic</td></tr>
+										<tr><td class="medium_font"><input type="checkbox" name="attentive" id="attentive"/> Attentive</td></tr>
+										<tr><td class="medium_font"><input type="checkbox" name="blind_fight" id="blind_fight"/> Blind-Fight</td></tr>
+										<tr>
+											<td class="medium_font">
+												<input type="checkbox" name="brawl" id="brawl"/> Brawl
+												<ul>
+													<li><input type="checkbox" name="improved_brawl" id="improved_brawl"/> Improved Brawl</li>
+													<li><input type="checkbox" name="knockout_punch" id="knockout_punch"/> Knockout Punch</li>
+														<ul>
+															<li><input type="checkbox" name="improved_knockout_punch" id="improved_knockout_punch"/> Improved Knockout Punch</li>
+														</ul>
+													</li>
+													<li><input type="checkbox" name="streetfighting" id="streetfighting"/> Streetfighting
+														<ul>
+															<li><input type="checkbox" name="improved_feint" id="improved_feint"/> Improved Feint</li>
+														</ul>
+													</li>
+												</ul>
+											</td>
+										</tr>
+										<tr><td class="medium_font"><input type="checkbox" name="builder" id="builder"/> Builder</td></tr>
+										<tr><td class="medium_font"><input type="checkbox" name="cautious" id="cautious"/> Cautious</td></tr>
+										<tr>
+											<td class="medium_font">
+												<input type="checkbox" name="combat_expertise" id="combat_expertise"/> Combat Expertise
+												<ul>
+													<li><input type="checkbox" name="improved_disarm" id="improved_disarm"/> Improved Disarm</li>
+													<li><input type="checkbox" name="improved_trip" id="improved_trip"/> Improved Trip</li>
+													<li><input type="checkbox" name="whirlwind_attack" id="whirlwind_attack"/> Whirlwind Attack</li>
+												</ul>
+											</td>
+										</tr>
+										<tr>
+											<td class="medium_font"><input type="checkbox" name="combat_martial_arts" id="combat_martial_arts"/> Combat Martial Arts
+												<ul>
+													<li>
+														<input type="checkbox" name="improved_martial_arts" id="improved_martial_arts"/> Improved Martial Arts
+														<ul>
+															<li><input type="checkbox" name="advanced_martial_arts" id="advanced_martial_arts"/> Advanced Martial Arts</li>
+														</ul>
+													</li>
+												</ul>
+											</td>
+										</tr>
+										<tr><td class="medium_font"><input type="checkbox" name="combat_reflexes" id="combat_reflexes"/> Combat Reflexes</td></tr>
+										<tr><td class="medium_font"><input type="checkbox" name="confident" id="confident"/> Confident</td></tr>
+										<tr><td class="medium_font"><input type="checkbox" name="creative" id="creative"/> Creative</td></tr>
+										<tr><td class="medium_font"><input type="checkbox" name="deceptive" id="deceptive"/> Deceptive</td></tr>
+										<tr>
+											<td class="medium_font"><input type="checkbox" name="defensive_martial_arts" id="defensive_martial_arts"/> Defensive Martial Arts
+												<ul>
+													<li><input type="checkbox" name="combat_throws" id="combat_throws"/> Combat Throw</li>
+														<ul>
+															<li><input type="checkbox" name="improved_combat_throw" id="improved_combat_throw"/> Improved Combat Throw</li>
+														</ul>
+													<li><input type="checkbox" name="elusive_target" id="elusive_target"/> Elusive Target<li>
+													<li><input type="checkbox" name="unbalance_opponent" id="unbalance_opponent"/> Unbalance Opponent<li>
+												</ul>
+											</td>
+										</tr>
+										<tr>
+											<td class="medium_font"><input type="checkbox" name="dodge" id="dodge"/> Dodge
+												<ul>
+													<li><input type="checkbox" name="agile_riposte" id="agile_riposte"/> Agile Riposte</li>
+													<li><input type="checkbox" name="mobility" id="mobility"/> Mobility</li>
+													<ul>
+														<li><input type="checkbox" name="spring_attack" id="spring_attack"/> Spring Attack</li>
+													</ul>
+												</ul>
+											</td>
+										</tr>
+										<tr><td class="medium_font"><input type="checkbox" name="drive_by_attack" id="drive_by_attack"/> Drive-By Attack</td></tr>
+										<tr><td class="medium_font"><input type="checkbox" name="educated" id="educated"/> Educated*</td></tr>
+										<tr><td class="medium_font"><input type="checkbox" name="endurance" id="endurance"/> Endurance</td></tr>
+										<tr><td class="medium_font"><input type="checkbox" name="exotic_melee_weapon_proficiency" id="exotic_melee_weapon_proficiency"/> Exotic Melee Weapon Proficiency*</td></tr>
+										<tr>
+											<td class="medium_font"><input type="checkbox" name="far_shot" id="far_shot"/> Far Shot
+												<ul>
+													<li><input type="checkbox" name="dead_aim" id="dead_aim"/> Dead Aim</li>
+												</ul>
+											</td>
+										</tr>
+										<tr><td class="medium_font"><input type="checkbox" name="focused" id="focused"/> Focused</td></tr>
+										<tr><td class="medium_font"><input type="checkbox" name="frightful_presence" id="frightful_presence"/> Frightful Presence</td></tr>
+										<tr><td class="medium_font"><input type="checkbox" name="gearhead" id="gearhead"/> Gearhead</td></tr>
+										<tr><td class="medium_font"><input type="checkbox" name="great_fortitude" id="great_fortitude"/> Great Fortitude</td></tr>
+									</table>
+								</td>
+								<td valign="top">
+									<table>
+										<tr><td class="medium_font"><input type="checkbox" name="guide" id="guide"/> Guide</td></tr>
+										<tr><td class="medium_font"><input type="checkbox" name="heroic_surge" id="heroic_surge"/> Heroic Surge</td></tr>
+										<tr><td class="medium_font"><input type="checkbox" name="improved_damage_threshold" id="improved_damage_threshold"/> Improved Damage Threshold**</td></tr>
+										<tr><td class="medium_font"><input type="checkbox" name="improved_initiative" id="improved_initiative"/> Improved Initiative</td></tr>
+										<tr><td class="medium_font"><input type="checkbox" name="iron_will" id="iron_will"/> Iron Will</td></tr>
+										<tr><td class="medium_font"><input type="checkbox" name="lightning_reflexes" id="lightning_reflexes"/> Lightning Reflexes</td></tr>
+										<tr><td class="medium_font"><input type="checkbox" name="low_profile" id="low_profile"/> Low Profile</td></tr>
+										<tr><td class="medium_font"><input type="checkbox" name="medical_expert" id="medical_expert"/> Medical Expert</td></tr>
+										<tr><td class="medium_font"><input type="checkbox" name="meticulous" id="meticulous"/> Meticulous</td></tr>
+										<tr><td class="medium_font"><input type="checkbox" name="nimble" id="nimble"/> Nimble</td></tr>
+										<tr>
+											<td class="medium_font"><input type="checkbox" name="personal_firearms_proficiency" id="personal_firearms_proficiency"/> Personal Firearms Proficiency
+												<ul>
+													<li><input type="checkbox" name="advanced_firearms_proficiency" id="advanced_firearms_proficiency"/> Advanced Firearms Proficiency</li>
+														<ul>
+															<li><input type="checkbox" name="burst_fire" id="burst_fire"/> Burst Fire</li>
+															<li><input type="checkbox" name="exotic_firearms_proficiency" id="exotic_firearms_proficiency"/> Exotic Firearms Proficiency</li>
+															<li><input type="checkbox" name="strafe" id="strafe"/> Strafe</li>
+														</ul>
+												</ul>
+											</td>
+										</tr>
+										<tr>
+											<td class="medium_font"><input type="checkbox" name="point_blank_shot" id="point_blank_shot"/> Point Blank Shot
+												<ul>
+													<li><input type="checkbox" name="double_tap" id="double_tap"/> Double Tap</li>
+													<li><input type="checkbox" name="precise_shot" id="precise_shot"/> Precise Shot</li>
+													<li><input type="checkbox" name="shot_on_the_run" id="shot_on_the_run"/> Shot on the Run</li>
+													<li><input type="checkbox" name="skip_shot" id="skip_shot"/> Skip Shot</li>
+												</ul>
+											</td>
+										</tr>
+										<tr>
+											<td class="medium_font"><input type="checkbox" name="power_attack" id="power_attack"/> Power Attack
+												<ul>
+													<li><input type="checkbox" name="cleave" id="cleave"/> Cleave</li>
+														<ul>
+															<li><input type="checkbox" name="great_cleave" id="great_cleave"/> Great Cleave</li>
+														</ul>
+													<li><input type="checkbox" name="improved_bull_rush" id="improved_bull_rush"/> Improved Bull Rush</li>
+													<li><input type="checkbox" name="sunder" id="sunder"/> Sunder</li>
+												</ul>
+											</td>
+										</tr>
+										<tr><td class="medium_font"><input type="checkbox" name="quick_draw" id="quick_draw"/> Quick Draw</td></tr>
+										<tr><td class="medium_font"><input type="checkbox" name="quick_reload" id="quick_reload"/> Quick Reload</td></tr>
+										<tr><td class="medium_font"><input type="checkbox" name="renown" id="renown"/> Renown</td></tr>
+										<tr><td class="medium_font"><input type="checkbox" name="run" id="run"/> Run</td></tr>
+										<tr><td class="medium_font"><input type="checkbox" name="simple_weapons_proficiency" id="simple_weapons_proficiency"/> Simple Weapons Proficiency</td></tr>
+										<tr><td class="medium_font"><input type="checkbox" name="stealthy" id="stealthy"/> Stealthy</td></tr>
+										<tr><td class="medium_font"><input type="checkbox" name="studious" id="studious"/> Studious</td></tr>
+										<tr><td class="medium_font"><input type="checkbox" name="surface_vehicle_operations" id="surface_vehicle_operations"/> Surface Vehicle Operation*</td></tr>
+										<tr><td class="medium_font"><input type="checkbox" name="surgery" id="surgery"/> Surgery</td></tr>
+										<tr><td class="medium_font"><input type="checkbox" name="toughness" id="toughness"/> Toughness**</td></tr>
+										<tr><td class="medium_font"><input type="checkbox" name="track" id="track"/> Track</td></tr>
+										<tr><td class="medium_font"><input type="checkbox" name="trustworthy" id="trustworthy"/> Trustworthy</td></tr>
+										<tr>
+											<td class="medium_font"><input type="checkbox" name="two_weapon_fighting" id="two_weapon_fighting"/> Two-Weapon Fighting
+												<ul>
+													<li><input type="checkbox" name="improved_two_weapon_fighting" id="improved_two_weapon_fighting"/> Improved Two-Weapon Fighting
+														<ul>
+															<li><input type="checkbox" name="advanced_two_weapon_fighting" id="advanced_two_weapon_fighting"/> Advanced Two-Weapon Fighting</li>
+														</ul>
+													</li>
+												</ul>
+											</td>
+										</tr>
+										<tr>
+											<td class="medium_font"><input type="checkbox" name="vehicle_expert" id="vehicle_expert"/> Vehicle Expert
+												<ul>
+													<li><input type="checkbox" name="force_stop" id="force_stop"/> Force Stop</li>
+													<li><input type="checkbox" name="vehicle_dodge" id="vehicle_dodge"/> Vehicle Dodge</li>
+												</ul>
+											</td>
+										</tr>
+										<tr><td class="medium_font"><input type="checkbox" name="weapon_finesse" id=""weapon_finesse"/> Weapon Finesse*</td></tr>
+										<tr><td class="medium_font"><input type="checkbox" name="weapon_focus" id="weapon_focus"/> Weapon Focus*</td></tr>
+										<tr><td class="medium_font"><input type="checkbox" name="windfall" id="windfall"/> Windfall**</td></tr>
+										<tr><td class="medium_font"><input type="checkbox" name="feat_1" id="feat_1"/> <input type="text" size="30" name="feat_1_name" id="feat_1_name"/></td></tr>
+										<tr><td class="medium_font"><input type="checkbox" name="feat_2" id="feat_2"/> <input type="text" size="30" name="feat_2_name" id="feat_2_name"/></td></tr>
+										<tr><td class="medium_font"><input type="checkbox" name="feat_3" id="feat_3"/> <input type="text" size="30" name="feat_3_name" id="feat_3_name"/></td></tr>
+									</table>
+								</td>
+							</tr>
+							<tr class="medium_font"  align="center">
+								<td colspan="2">*You can gain this feat multiple times. Its effects do not stack. Each time you take the feat,<br/>it applies to a different skill, type of equipment, or weapon type.<br/>**You can gain this multiple times. Its effects stack.</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+		</form>
+</body></html>

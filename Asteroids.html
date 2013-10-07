@@ -1,0 +1,113 @@
+<html>
+<head>
+<script language="javascript" type="text/javascript">
+var canvas = null;
+var c2d = null;
+
+window.onload = init;
+function init()
+{
+	asteroids=[{x:470,y:290,angle:1.71,points_x:[-30,-10,0,20,40,20,-10],points_y:[ 0,-20,-50,-30,0,20,20]},{x:270,y:290,angle:1.71,points_x:[-30,-10,0,20,40,20,-10],points_y:[ 0,-20,-50,-30,0,20,20]}];
+	player={x:50,y:50,angle:1.71,inertia:0,inertiaAngle:0};
+	canvas = document.getElementById('canvas');
+	ctx = canvas.getContext('2d');
+	setInterval( step, 0 );
+}
+
+function step()
+{
+	for (i in asteroids)
+	{
+		asteroids[i].angle+= i%2==0?.05:-.05
+	}
+	ctx.fillStyle="rgba(0,0,0,.5)";
+	ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+	for (u=0;u<asteroids.length;u++)
+	{
+		ctx.save();
+		ctx.beginPath();
+		Asteroid_draw(asteroids[u]);
+		ctx.closePath();
+		ctx.strokeStyle = "#00ff00";
+		ctx.stroke();
+		ctx.restore();
+	}
+	ctx.save();
+	ctx.beginPath();
+	Player_draw(player);
+	ctx.closePath();
+
+	ctx.restore();
+
+	ctx.strokeStyle = "#00ff00";
+	ctx.stroke();
+
+	player.x<0?player.x=canvas.width:player.x%=canvas.width;
+	player.y<0?player.y=canvas.height:player.y%=canvas.height;
+
+	if(player.inertia>0)
+	{
+		player.inertia-=.01;
+	}
+
+	player.x+=Math.sin(player.inertiaAngle)*player.inertia;
+	player.y+=-Math.cos(player.inertiaAngle)*player.inertia;
+}
+
+function Asteroid_draw(obj)
+{
+	ctx.translate(obj.x, obj.y);
+	ctx.rotate(obj.angle);
+	ctx.moveTo(obj.points_x[0],obj.points_y[0]);
+	for (i=0;i<obj.points_x.length-1;i++)
+	{
+		ctx.lineTo(obj.points_x[i],obj.points_y[i]);
+	}
+	ctx.lineTo(obj.points_x[0],obj.points_y[0]);
+	//ctx.moveTo(obj.points_x[0],obj.points_y[0]);
+	//ctx.lineTo(obj.points_x[obj.points_x.length-1],obj.points_y[obj.points_x.length-1]);
+}
+
+function Player_draw(obj)
+{
+	ctx.translate( obj.x, obj.y );
+	ctx.rotate(obj.angle);
+	//Points {0,-12}{7,5}{-7,5}
+	ctx.moveTo(0,-12);
+	ctx.lineTo(7,5);
+	ctx.moveTo(7,5);
+	ctx.lineTo(-7,5);
+	ctx.moveTo(-7,5);
+	ctx.lineTo(0,-12);
+}
+
+document.onkeydown=function(event){keyDown(event)};
+
+function keyDown(event)
+{ 
+	switch(event.keyCode)
+	{
+		case 37:
+			player.angle-=.1;//left
+		break;
+		case 39:
+			player.angle+=.1;//right
+		break;
+		case 38:
+			player.inertia+=.1;//up
+			player.inertiaAngle=(player.inertiaAngle+player.angle)/2;//thrust
+		break;
+		case 40:
+			player={x:50,y:50,angle:1.71,inertia:0,inertiaAngle:0};//reset
+		break;
+	}
+}
+
+
+</script>
+</head>
+<body>
+<canvas id="canvas" width="600" height="600"></canvas>
+</body>
+</html>

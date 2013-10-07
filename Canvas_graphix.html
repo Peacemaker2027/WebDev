@@ -1,0 +1,217 @@
+<html>
+	<head>
+	<script type="text/css">
+		canvas
+		{
+			position:absolute;
+			left:0px;
+			top:0px;
+		}
+	</script>
+	<script type="text/javascript">
+	/*
+	c = 299,792,458 m/s
+	1 ly = 9,461,000,000,000,000,000 m
+	100,000 ly = 946,100,000,000,000,000,000,000 m
+	galaxy radius = 473,050,000,000,000,000,000,000 m
+	10 hours max = 26,281,000,000,000,000,000 m/s
+	-or- 88,000,000,000 x c
+	*/
+	var c;
+	var shape1;
+	var C = 299792458;
+	var toggle = false;
+		function points(x,y,a,c)
+		{
+			this.angle = a;
+			this.dangle = 0;
+			this.originx = x;
+			this.originy = y;
+			this.dx = 0;
+			this.dy = 0;
+			this.scale = 1;
+			this.xpts = new Array();
+			this.ypts = new Array();
+			this.masses = new Array();
+			this.speed = 0;
+			//c.translate(-this.originx+500,-this.originy+500);
+			this.add = function(x,y,kg)
+			{
+				x = Math.round(x);
+				y = Math.round(y);
+				kg = Math.round(kg);
+				if(kg>0)
+				{
+					this.xpts.push(x);
+					this.ypts.push(y);
+					this.masses.push(kg);
+				}
+			};
+			this.sub = function(index)
+			{
+				this.xpts.slice(index);
+				this.ypts.slice(index);
+				this.masses.slice(index);
+			};
+			this.setCOG = function()
+			{
+				var sumx = 0;
+				var sumy = 0;
+				var sumkg = 0;
+				for(i=0;i<=this.masses.length-1;i++)//Sum the mass total
+				{
+					sumkg += this.masses[i];
+				}
+				for(i=0;i<=this.masses.length-1;i++)//Multiply points by percentage of mass to get new points and sum them to obtain new origin
+				{
+					sumx += this.xpts[i]*(this.masses[i]/sumkg);
+					sumy += this.ypts[i]*(this.masses[i]/sumkg);
+				}
+				for(i=0;i<=this.masses.length-1;i++)//Subtract individual points from the origin to get new points and store them
+				{
+					this.xpts[i] = this.xpts[i]-sumx;
+					this.ypts[i] = this.ypts[i]-sumy;
+				}
+			};
+			this.run = function(canvaselement, drawtype, stroketype)
+			{
+				this.dx = this.speed*Math.cos(this.degToRad(this.angle+90));
+				this.dy = this.speed*Math.sin(this.degToRad(this.angle+90));
+				this.angle += this.dangle;
+				canvaselement.translate(-this.dx,-this.dy);
+				if(this.angle>360)
+				{
+					this.angle -= 360;
+				}
+				if(this.angle<0)
+				{
+					this.angle += 360;
+				}
+				this.originx += this.dx;
+				this.originy += this.dy;
+				canvaselement.clearRect(this.originx-500,this.originy-500,1000,1000);
+				var tempDeg = this.xyToDeg(this.xpts[0],this.ypts[0]);
+				var tempRadius = this.scale*this.xyToRadius(this.xpts[0],this.ypts[0]);
+				tempDeg += this.angle;
+				var tempx = tempRadius*Math.cos(this.degToRad(tempDeg));
+				var tempy = tempRadius*Math.sin(this.degToRad(tempDeg));
+				canvaselement.moveTo(this.originx+tempx, this.originy+tempy);
+				for(i=1;i<=this.xpts.length-1;i++)
+				{
+					tempDeg = this.xyToDeg(this.xpts[i],this.ypts[i]);
+					tempRadius = this.scale*this.xyToRadius(this.xpts[i],this.ypts[i]);
+					tempDeg += this.angle;
+					tempx = tempRadius*Math.cos(this.degToRad(tempDeg));
+					tempy = tempRadius*Math.sin(this.degToRad(tempDeg));
+					canvaselement.lineTo(this.originx+tempx,this.originy+tempy);
+				}
+				tempDeg = this.xyToDeg(this.xpts[0],this.ypts[0]);
+				tempRadius = this.scale*this.xyToRadius(this.xpts[0],this.ypts[0]);
+				tempDeg += this.angle;
+				tempx = tempRadius*Math.cos(this.degToRad(tempDeg));
+				tempy = tempRadius*Math.sin(this.degToRad(tempDeg));
+				canvaselement.lineTo(this.originx+tempx,this.originy+tempy);
+				
+				canvaselement.fillStyle = drawtype;
+				canvaselement.strokeStyle = stroketype;
+				canvaselement.fill();
+				canvaselement.stroke();
+			};
+			this.degToRad = function(degrees)
+			{
+				return (Math.PI/180)*degrees;
+			};
+			this.xyToDeg = function(x,y)
+			{
+				return (180/Math.PI)*(Math.atan2(y,x));
+			};
+			this.xyToRadius = function(x,y)
+			{
+				return Math.sqrt(Math.pow(x,2)+Math.pow(y,2));
+			};
+		}
+		
+		function init()
+		{
+		try{
+		ctx = document.getElementById('mycanvas').getContext('2d');
+		shape1 = new points(0,0,0);
+		shape1.scale = 1;
+		shape1.add(0,100,1);
+		shape1.add(-50,0,1);
+		shape1.add(50,0,1);
+		shape1.setCOG();
+		ctx.translate(-shape1.originx+500,-shape1.originy+500);
+		draw();
+		}
+		catch(err){
+		alert(err);
+		}
+		}
+		
+		function earth()
+		{
+				ctx.fillStyle = "rgba(200,0,0,1)";
+				ctx.fillRect(10, 10, 50, 50);
+				ctx.fillStyle = "rgb(0,255,0)";//was strokeStyle
+				var deg = Math.atan2(shape1.originy,shape1.originx);
+				ctx.fillStyle = "black";
+				ctx.fillText(deg, shape1.originx + 10, shape1.originy+90);
+				//var x = (100*Math.cos(shape1.degToRad(deg)));
+				//var y = (100*Math.sin(shape1.degToRad(deg)));
+				//ctx.arc(x,y,10,0,Math.PI*2,true);
+				ctx.stroke();
+		}
+		
+		function draw()
+		{
+			try{
+			ctx.beginPath();
+			shape1.run(ctx,"rgba(128, 128, 128, 0.5)", "black");
+			ctx.closePath();
+			ctx.beginPath();
+			earth();
+			ctx.closePath();
+			ctx.fillStyle = "black";
+			ctx.fillText("x:" + Math.round(shape1.originx), shape1.originx + 10, shape1.originy + 50);
+			ctx.fillText("y:" + Math.round(shape1.originy), shape1.originx + 10, shape1.originy + 60);
+			ctx.fillText(shape1.speed + " m/s", shape1.originx + 10, shape1.originy + 70);
+			ctx.fillText(shape1.angle + "°", shape1.originx + 10, shape1.originy + 80);
+			setTimeout(draw, 10);
+			}
+			catch(err){
+			alert(err);
+			}
+		}
+		
+		function mouse_coords(event)
+		{
+			shape1.angle = shape1.xyToDeg(event.layerX-510,event.layerY-510)-90;
+			if(toggle)
+			{
+				shape1.speed = shape1.xyToRadius(event.clientX-500,event.clientY-500)/100;
+			}
+			else
+			{
+				shape1.speed = 0;
+			}
+		}
+		function mouse_press(event)
+		{
+			if(toggle)
+			{
+				toggle = false;
+			}
+			else
+			{
+				toggle = true;
+				shape1.speed = shape1.xyToRadius(event.clientX-500,event.clientY-500)/100;
+			}
+		}
+	</script>
+	</head>
+	<body onload="init()">
+		<canvas id="mycanvas" onmousedown="mouse_press(event)" onmousemove="mouse_coords(event)" width="1000" height="1000">
+		</canvas>
+	</body>
+</html>
